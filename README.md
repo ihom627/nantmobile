@@ -1,0 +1,3 @@
+# nantmobile
+
+python solution.py

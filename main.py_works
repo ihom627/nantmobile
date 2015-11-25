@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+
+
+#DEBUG 
+DEBUG = 1 
+
+#inputs
+original_sentence = "Jack and Jill went up one hill to get two pails of water while I'm watching from the farm"
+
+objects = {'NAME': set(['Jack', 'Jill']),
+         'NUM': set(['one', 'two', 'three', 'four', 'five']),
+         'PLACE': set(['hill', 'farm'])}
+
+
+
+#STEP1 define vars
+tagged_list = []
+untagged_list = []
+lower_case_original_sentence = "" 
+class_tagged_sentence = "" 
+found_flag = 0
+
+
+#STEP2 sanity check and parse original_sentence
+if DEBUG:
+    print original_sentence
+
+lower_case_original_sentence = original_sentence.lower()
+
+list_of_words = lower_case_original_sentence.split()
+
+if DEBUG:
+    print list_of_words
+
+    for word in list_of_words:
+        print word
+
+
+#STEP2 sanity check and examine objects
+print objects
+
+for element in objects:
+    print element
+    print objects[element]
+
+#replace elements in set with lowercase value
+for element in objects:
+
+   temp_set = set() 
+
+   while objects[element]:
+       temp = objects[element].pop()
+       print "this is temp %s" % (temp)
+       temp_lower = temp.lower()
+       print "this is temp_lower %s" % (temp_lower)
+       temp_set.add(temp_lower)
+
+   objects[element] = temp_set
+
+
+for element in objects:
+    print element
+    print objects[element]
+
+
+#STEP3 search for each word in original_sentence in the hash value set
+for word in list_of_words:
+    found_flag = 0
+
+    for element in objects:
+        if word in objects[element]:
+            print "FOUND word %s in object %s" % (word, element)
+            tagged_list.append(word) 
+            found_flag = 1
+            break
+        else:
+            print "NOT found word %s" % (word)
+            found_flag = 0 
+
+    #append to untagged_list
+    if found_flag == 0:
+        untagged_list.append(word)
+
+    #create class tagged sentence 
+    if found_flag == 1:
+        class_tagged_sentence = class_tagged_sentence + " " + element
+    else:
+        class_tagged_sentence = class_tagged_sentence + " " + word 
+
+
+print original_sentence
+print tagged_list
+print untagged_list
+print class_tagged_sentence
+
+
+
+
+
